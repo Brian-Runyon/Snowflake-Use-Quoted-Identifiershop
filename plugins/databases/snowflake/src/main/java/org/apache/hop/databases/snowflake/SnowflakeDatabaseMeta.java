@@ -497,4 +497,14 @@ public class SnowflakeDatabaseMeta extends BaseDatabaseMeta implements IDatabase
   public boolean isRequiringTransactionsOnQueries() {
     return false;
   }
+
+  @Override
+  public String getStartQuote() {
+    return "\"";
+  }
+
+  @Override
+  public String getEndQuote() {
+    return "\"";
+  }
 }

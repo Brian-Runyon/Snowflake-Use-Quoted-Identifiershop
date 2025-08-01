@@ -184,9 +184,9 @@ public class SnowflakeBulkLoader
     data.dbFields = new ArrayList<>();
     String sql = "desc table ";
     if (!StringUtils.isEmpty(resolve(meta.getTargetSchema()))) {
-      sql += resolve(meta.getTargetSchema()) + ".";
+      sql += quote(resolve(meta.getTargetSchema())) + ".";
     }
-    sql += resolve(meta.getTargetTable());
+    sql += quote(resolve(meta.getTargetTable()));
     logDetailed(CONST_EXECUTING_SQL + sql);
     try {
       try (ResultSet resultSet =
@@ -904,5 +904,9 @@ public class SnowflakeBulkLoader
   private OutputStream getOutputStream(String vfsFilename, IVariables variables, boolean append)
       throws HopFileException {
     return HopVfs.getOutputStream(vfsFilename, append, variables);
+  }
+
+  private static String quote(String identifier) {
+    return "\"" + identifier.replace("\"", "\"\"") + "\"";
   }
 }

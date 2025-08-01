@@ -982,11 +982,11 @@ public class SnowflakeBulkLoaderMeta
 
     // Schema
     if (!StringUtils.isEmpty(variables.resolve(targetSchema))) {
-      returnValue.append(variables.resolve(targetSchema)).append(".");
+      returnValue.append(quote(variables.resolve(targetSchema))).append(".");
     }
 
     // Table
-    returnValue.append(variables.resolve(targetTable)).append(" ");
+    returnValue.append(quote(variables.resolve(targetTable))).append(" ");
 
     // Location
     returnValue.append("FROM ").append(getStage(variables)).append("/ ");
@@ -1125,5 +1125,9 @@ public class SnowflakeBulkLoaderMeta
     }
 
     return retval;
+  }
+
+  private static String quote(String identifier) {
+    return "\"" + identifier.replace("\"", "\"\"") + "\"";
   }
 }
